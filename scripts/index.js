@@ -24,6 +24,14 @@ const products = [{
         count: 56
     },
     priceCents: 799
+},{
+    image: 'img/Products/Product4.png',
+    name: 'Product 4 - # Pairs',
+    rating: {
+        stars: 5,
+        count: 2197
+    },
+    priceCents: 299
 }];
 
 let productsHTML = '';
@@ -70,8 +78,7 @@ products.forEach((product)=>{
     <button class="add-to-cart-button button-primary">
         Add to Cart
     </button>
-    </div>
-    `;
+    </div>`;
 });
 
 console.log(productsHTML);
