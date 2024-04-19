@@ -6,7 +6,7 @@ export const products = [{
         stars: 3.5,
         count: 87
     },
-    priceCents: 1090
+    priceCents: 2095
 },{
     id: "A2",
     image: 'img/Products/Product2.png',
@@ -15,7 +15,7 @@ export const products = [{
         stars: 4,
         count: 127
     },
-    priceCents: 2095
+    priceCents: 490
 },{
     id: "A3",
     image: 'img/Products/Product3.png',
