@@ -1,39 +1,5 @@
 "user strict"
 
-const products = [{
-    image: 'img/Products/Product1.png',
-    name: 'Product 1 - # Pairs',
-    rating: {
-        stars: 3.5,
-        count: 87
-    },
-    priceCents: 1090
-},{
-    image: 'img/Products/Product2.png',
-    name: 'Product 2 - # Pairs',
-    rating: {
-        stars: 4,
-        count: 127
-    },
-    priceCents: 2095
-},{
-    image: 'img/Products/Product3.png',
-    name: 'Product 3 - # Pairs',
-    rating: {
-        stars: 4.5,
-        count: 56
-    },
-    priceCents: 799
-},{
-    image: 'img/Products/Product4.png',
-    name: 'Product 4 - # Pairs',
-    rating: {
-        stars: 5,
-        count: 2197
-    },
-    priceCents: 299
-}];
-
 let productsHTML = '';
 
 products.forEach((product)=>{
@@ -75,12 +41,34 @@ products.forEach((product)=>{
         Added
     </div>
 
-    <button class="add-to-cart-button button-primary">
+    <button class="add-to-cart-button button-primary js-add-to-cart" data-product-id="${product.id}">
         Add to Cart
     </button>
     </div>`;
 });
 
-console.log(productsHTML);
-
 document.querySelector(".js-products-grid").innerHTML = productsHTML
+
+document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
+    button.addEventListener("click", ()=>{
+        const productId = button.dataset.productId;
+
+        let matchingItem;
+
+        cart.forEach((item)=>{
+            if (productId === item.productId){
+                matchingItem = item;
+            }
+        });
+        if (matchingItem){
+            matchingItem.quantity +=1;
+        }else {
+        cart.push({
+            productId: productId,
+            quantity: 1
+        });            
+        }
+
+        console.log(cart)
+    })
+})
