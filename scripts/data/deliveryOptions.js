@@ -17,17 +17,11 @@ export const deliveryOptions = [
 ];
 
 function getDateAfter7Days() {
-    // Get today's date
     let today = new Date();
-
-    // Add 7 days to today's date
     let after7Days = new Date(today);
     after7Days.setDate(today.getDate() + 7);
-
-    // Format the date
     let options = { weekday: 'long', month: 'long', day: 'numeric' };
     let formattedDate = after7Days.toLocaleString('en-US', options);
-
     return formattedDate;
 }
 function getDateAfter3Days() {
