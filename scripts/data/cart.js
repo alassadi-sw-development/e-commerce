@@ -57,6 +57,7 @@ export function updateCartQuantity(){
     
     document.querySelector('.total-Quantity')
     .innerHTML = `${cartQuantity} items`;
+    return cartQuantity;
     }
 
 export function updateQuantity(productId, newQuantity) {

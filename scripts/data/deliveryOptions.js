@@ -52,3 +52,14 @@ function getDateAfter1Days() {
 
     return formattedDate;
 }
+
+export function getDeliveryOption(deliveryOptionId) {
+    let deliveryOption;
+
+    deliveryOptions.forEach((option)=>{
+        if(option.id === deliveryOptionId){
+            deliveryOption = option;
+        }
+    });
+    return deliveryOption;
+}
