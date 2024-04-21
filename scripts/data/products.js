@@ -12,7 +12,7 @@ export function getProduct(productId) {
 export const products = [{
     id: "A1",
     image: 'img/Products/Product1.png',
-    name: 'Product 1 - # Pairs',
+    name: 'Product 1',
     rating: {
         stars: 3.5,
         count: 87
@@ -21,7 +21,7 @@ export const products = [{
 },{
     id: "A2",
     image: 'img/Products/Product2.png',
-    name: 'Product 2 - # Pairs',
+    name: 'Product 2',
     rating: {
         stars: 4,
         count: 127
@@ -30,7 +30,7 @@ export const products = [{
 },{
     id: "A3",
     image: 'img/Products/Product3.png',
-    name: 'Product 3 - # Pairs',
+    name: 'Product 3',
     rating: {
         stars: 4.5,
         count: 56
@@ -39,7 +39,7 @@ export const products = [{
 },{
     id: "B1",
     image: 'img/Products/Product4.png',
-    name: 'Product 4 - # Pairs',
+    name: 'Product 4',
     rating: {
         stars: 5,
         count: 2197
