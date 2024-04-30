@@ -59,7 +59,7 @@
   .header-left {
     width: unset;
   }
-  .placeholder{
+  .sort-products {
     display: none;
   }
 }
@@ -166,7 +166,7 @@
   text-align: center;
 }
 @media (max-width: 1300px){
-  .placeholder{
+  .sort-products {
     display: none;
   }
 }
@@ -193,12 +193,12 @@
   .search-button {
     width: 2rem;
   }
-  .placeholder{
+  .sort-products {
     display: none;
   }
 }
 
-.placeholder{
+.sort-products {
   max-width: 10rem ;
   flex-grow: 1;
   flex-shrink: 1;

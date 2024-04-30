@@ -1,54 +1,29 @@
 export const deliveryOptions = [
     {
         id: '1',
-        deliveryDate: getDateAfter7Days(),
+        deliveryDate: getDateAfterDays(7),
         priceCents: 0
     },
     {
         id: '2',
-        deliveryDate: getDateAfter3Days(),
+        deliveryDate: getDateAfterDays(3),
         priceCents: 499
     },
     {
         id: '3',
-        deliveryDate: getDateAfter1Days(),
+        deliveryDate: getDateAfterDays(1),
         priceCents: 999
     }
 ];
 
-function getDateAfter7Days() {
-    let today = new Date();
-    let after7Days = new Date(today);
-    after7Days.setDate(today.getDate() + 7);
-    let options = { weekday: 'long', month: 'long', day: 'numeric' };
-    let formattedDate = after7Days.toLocaleString('en-US', options);
-    return formattedDate;
-}
-function getDateAfter3Days() {
-    // Get today's date
+function getDateAfterDays(numDays) {
     let today = new Date();
 
-    // Add 7 days to today's date
-    let after3Days = new Date(today);
-    after3Days.setDate(today.getDate() + 3);
+    let afterDays = new Date(today);
+    afterDays.setDate(today.getDate() + numDays);
 
-    // Format the date
     let options = { weekday: 'long', month: 'long', day: 'numeric' };
-    let formattedDate = after3Days.toLocaleString('en-US', options);
-
-    return formattedDate;
-}
-function getDateAfter1Days() {
-    // Get today's date
-    let today = new Date();
-
-    // Add 7 days to today's date
-    let after1Days = new Date(today);
-    after1Days.setDate(today.getDate() + 1);
-
-    // Format the date
-    let options = { weekday: 'long', month: 'long', day: 'numeric' };
-    let formattedDate = after1Days.toLocaleString('en-US', options);
+    let formattedDate = afterDays.toLocaleString('en-US', options);
 
     return formattedDate;
 }

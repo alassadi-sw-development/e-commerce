@@ -102,7 +102,7 @@ let UpdateLinks = document.querySelectorAll(`.js-update-quantity-link`);
         saveButton.classList.add('is-editing-quantity');
         link.style.display = 'none';
         saveButton.addEventListener('click', ()=>{
-            const newQuantity=Number(inputTag.value);
+            const newQuantity = Math.abs(Math.round(parseFloat(inputTag.value)));
             updateQuantity(productId, newQuantity);
             const quantityLabel = document.querySelector(
                 `.js-quantity-label-${productId}`

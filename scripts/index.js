@@ -2,7 +2,6 @@
 import {cart, addToCart} from './data/cart.js'
 import {products as importedProdutcs} from './data/products.js'
 import {formatCurrency} from './utils/money.js';
-let productsHTML = '';
 
 let products = importedProdutcs.slice();
 
@@ -177,13 +176,13 @@ function saveProductsToStorage(){
 }
 
 function handleSearch() {
-    let searchString = searchbar.value.trim().toLowerCase();
+    let searchString = searchbar.value.trim().toLowerCase().replace(/\s/g, '');
     let newProducts = [];
 
     if (searchString){
         products = JSON.parse(localStorage.getItem("products"));
         products.forEach((product)=>{
-            if(product.name.includes(searchString)){
+            if(product.name.toLowerCase().replace(/\s/g, '').includes(searchString)){
                 newProducts.push(product);
             }
         });
