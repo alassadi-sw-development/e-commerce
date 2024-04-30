@@ -14,26 +14,57 @@
   right: 0;
   height: 5rem;
 } 
+.place-card{
+  display: none;
+}
 
 .header-left {
-  width: 12rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+.your-shop{
+  margin-top: 0.75rem;
+  margin-left: 0.5rem;
+  width: 10rem;
+  text-transform: capitalize;
+  font-weight: bold;
+  text-decoration: none;
+  color: #fff;
+  text-shadow: #ef2944 0px 0px 25px;
+  cursor: pointer;
+}
+.geo-location-map-link{
+  display: block;
+  margin-left: 1rem;
+  border: #ef2943a1 5px ridge;
+  border-radius: 5px;
+  height: 4.1rem;
+  overflow: hidden;
+}
+.geo-location-container{
+  display: flex;
+}
+.geo-location-map{
+  height: 5rem;
+  width: 20rem;
+}
+.header-link {
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
 }
 
 @media (max-width: 800px) {
   .header-left {
     width: unset;
   }
+  .placeholder{
+    display: none;
+  }
 }
 
-.header-link {
-  display: inline-block;
-  padding: 0.35rem ;
-  border-radius: 0.15rem;
-  cursor: pointer;
-  text-decoration: none;
-  border: thin solid black;
-  padding: 0;
-}
+
 
 .header-link:hover {
   border: 1px solid white;
@@ -134,7 +165,21 @@
   width: 1.4rem;
   text-align: center;
 }
+@media (max-width: 1300px){
+  .placeholder{
+    display: none;
+  }
+}
+@media (max-width:1000px){
+  .geo-location-map-link{
+    display: none;
+  }
+}
 
+@media(max-width: 700px){
+  .geo-location-container{
+    display: none;}
+}
 @media (max-width: 575px){
   .logo {
     display: none;
@@ -148,4 +193,13 @@
   .search-button {
     width: 2rem;
   }
+  .placeholder{
+    display: none;
+  }
+}
+
+.placeholder{
+  max-width: 10rem ;
+  flex-grow: 1;
+  flex-shrink: 1;
 }
