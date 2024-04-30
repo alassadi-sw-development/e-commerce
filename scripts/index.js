@@ -5,6 +5,12 @@ import {formatCurrency} from './utils/money.js';
 
 let products = importedProdutcs.slice();
 
+const selectElement = document.querySelector("#sort-products");
+
+
+
+selectElement.addEventListener("change", sortProductsByOption);
+
 const searchBtn = document.querySelector(".js-search-button");
 const searchbar = document.querySelector(".js-search-bar");
 
@@ -15,6 +21,8 @@ searchbar.addEventListener('keydown', function(event) {
         handleSearch();
     }
 });
+
+
 
 const productsGrid = document.querySelector(".js-products-grid")
 function renderProducts(){
@@ -220,6 +228,81 @@ document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
 });
 });
 });
+function sortProductsByOption() {
+    const selectedOption = this.options[this.selectedIndex];
+    switch(selectedOption.value){
+        case "A2Z":
+            console.log("a");
+            function sortProductsByName(products) {
+                products.sort((a, b) => {
+                    const nameA = a.name.toUpperCase();
+                    const nameB = b.name.toUpperCase();
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0;
+                });
+                return products;
+            }
+            products = sortProductsByName(products);
+            console.log(products);
+            renderProducts();
+            break;
+        case "Z2A":
+            console.log("b");
+            function sortProductsByNameDescending(products) {
+                products.sort((a, b) => {
+                    const nameA = a.name.toUpperCase();
+                    const nameB = b.name.toUpperCase();
+                    if (nameA > nameB) {
+                        return -1;
+                    }
+                    if (nameA < nameB) {
+                        return 1;
+                    }
+                    return 0;
+                });
+                return products;
+            }
+            products = sortProductsByNameDescending(products);
+            console.log(products);
+            renderProducts();
+            break;
+        case "high2low":
+            console.log("c");
+            function sortProductsByPriceDescending(products) {
+                products.sort((a, b) => b.priceCents - a.priceCents);
+                return products;
+            }
+            products = sortProductsByPriceDescending(products);
+            console.log(products);
+            renderProducts();
+            break;
+        case "low2high":
+            console.log("d");
+            function sortProductsByPriceAscending(products) {
+                products.sort((a, b) => a.priceCents - b.priceCents);
+                return products;
+            }
+            products = sortProductsByPriceAscending(products);
+            console.log(products);
+            renderProducts();
+            break;
+        case "HighestRating":
+            console.log("e");
+            function sortProductsByRatingDescending(products) {
+                products.sort((a, b) => b.rating.stars - a.rating.stars);
+                return products;
+            }
+            products = sortProductsByRatingDescending(products);
+            console.log(products);
+            renderProducts();
+            break;
+    }
+}
 updateCartQuantity()
 saveProductsToStorage()
 renderProducts()

@@ -5,8 +5,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>E-Commerce</title>
-  <link rel="stylesheet" href="./css/shared/header.css">
   <link rel="stylesheet" href="./css/shared/general.css">
+  <link rel="stylesheet" href="./css/shared/header.css">
   <link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
@@ -27,7 +27,15 @@
       <input type="text" placeholder="Search" class="search-bar js-search-bar">
       <button class="search-button js-search-button"><img src="img/icons/search-icon.png" alt="search-icon" class="search-icon"></button>
     </section>
-    <section class="sort-products js-sort-products"></section>
+    <section class="sort-products js-sort-products">
+      <select name="sort-products" id="sort-products">
+        <option value="A2Z" selected>Alphabetic (A to Z)</option>
+        <option value="Z2A">Alphabetic (Z to A)</option>
+        <option value="high2low"> Price (High to Low) </option>
+        <option value="low2high"> Price (Low to High) </option>
+        <option value="HighestRating">&#x2B50; Rating (Highest) &#x2B50;</option>        
+      </select>
+    </section>
     <section class="header-right">
       <a href="orders.html" class="orders-link header-link">
         <span class="returns-text">Returns</span>

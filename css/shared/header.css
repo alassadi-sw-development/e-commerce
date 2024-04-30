@@ -199,7 +199,24 @@
 }
 
 .sort-products {
-  max-width: 10rem ;
+  max-width: 15rem ;
   flex-grow: 1;
   flex-shrink: 1;
+}
+
+.sort-products select {
+  text-align: center;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 15rem;
+  background-color: #ef294325;
+  color: #fff;
+  background-clip: unset;
+  font-weight: bold;
+}
+
+.sort-products select option {
+  border-radius: 5px;
+  background-color: #0c101c;
 }
