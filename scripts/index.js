@@ -7,8 +7,6 @@ let products = importedProdutcs.slice();
 
 const selectElement = document.querySelector("#sort-products");
 
-
-
 selectElement.addEventListener("change", sortProductsByOption);
 
 const searchBtn = document.querySelector(".js-search-button");
@@ -147,8 +145,6 @@ document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
         const productId = button.dataset.productId;
         addToCart(productId);
         updateCartQuantity();
-        renderOrderSummary()
-        renderPaymentSummary()
         const addedMessage = document.querySelector(".js-add-to-cart-"+productId);
 
 
@@ -232,7 +228,6 @@ function sortProductsByOption() {
     const selectedOption = this.options[this.selectedIndex];
     switch(selectedOption.value){
         case "A2Z":
-            console.log("a");
             function sortProductsByName(products) {
                 products.sort((a, b) => {
                     const nameA = a.name.toUpperCase();
@@ -252,7 +247,6 @@ function sortProductsByOption() {
             renderProducts();
             break;
         case "Z2A":
-            console.log("b");
             function sortProductsByNameDescending(products) {
                 products.sort((a, b) => {
                     const nameA = a.name.toUpperCase();
@@ -272,7 +266,6 @@ function sortProductsByOption() {
             renderProducts();
             break;
         case "high2low":
-            console.log("c");
             function sortProductsByPriceDescending(products) {
                 products.sort((a, b) => b.priceCents - a.priceCents);
                 return products;
@@ -282,7 +275,6 @@ function sortProductsByOption() {
             renderProducts();
             break;
         case "low2high":
-            console.log("d");
             function sortProductsByPriceAscending(products) {
                 products.sort((a, b) => a.priceCents - b.priceCents);
                 return products;
@@ -292,7 +284,6 @@ function sortProductsByOption() {
             renderProducts();
             break;
         case "HighestRating":
-            console.log("e");
             function sortProductsByRatingDescending(products) {
                 products.sort((a, b) => b.rating.stars - a.rating.stars);
                 return products;
