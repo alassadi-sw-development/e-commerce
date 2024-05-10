@@ -1,9 +1,6 @@
 "user strict"
-import {Cart} from './data/cart-class.js'
+import {cart} from './data/cart-class.js'
 import {products as importedProdutcs} from './data/products.js'
-import {formatCurrency} from './utils/money.js';
-
-const cart = new Cart('cart-oop');
 
 let products = importedProdutcs.slice();
 
@@ -61,7 +58,7 @@ function renderProducts(){
     // Create rating stars image element
     const ratingStars = document.createElement('img');
     ratingStars.classList.add('product-rating-stars');
-    ratingStars.setAttribute('src', "./img/ratings/rating-"+(product.rating.stars * 10)+".png");
+    ratingStars.setAttribute("src", product.getStarsUrl());
     ratingStars.setAttribute('alt', 'product-rating-stars');
 
     // Create rating count element
@@ -76,7 +73,7 @@ function renderProducts(){
     // Create product price element
     const productPrice = document.createElement('div');
     productPrice.classList.add('product-price');
-    productPrice.textContent = "€"+formatCurrency(product.priceCents);
+    productPrice.textContent = product.getPrice();
 
     // Create product quantity container
     const quantityContainer = document.createElement('div');

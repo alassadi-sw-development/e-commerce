@@ -1,9 +1,8 @@
-import {Cart} from '../data/cart-class.js'
+"use strict"
+import {cart} from '../data/cart-class.js'
 import { getProduct } from "../data/products.js";
 import { getDeliveryOption } from "../data/deliveryOptions.js";
 import { formatCurrency } from "../utils/money.js";
-
-const cart = new Cart('cart-oop');
 
 export function renderPaymentSummary(){
     let productPriceCents = 0;

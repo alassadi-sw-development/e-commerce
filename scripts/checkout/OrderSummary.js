@@ -1,11 +1,9 @@
 "use strict"
-import {Cart} from '../data/cart-class.js'
+import {cart} from '../data/cart-class.js'
 import {getProduct} from '../data/products.js'
 import {formatCurrency} from '../utils/money.js';
 import {deliveryOptions, getDeliveryOption} from '../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
-
-const cart = new Cart('cart-oop');
 
 export function renderOrderSummary(){
 
@@ -37,7 +35,7 @@ cart.cartItems.forEach((cartItem)=>{
             ${matchingProduct.name}
             </div>
             <div class="product-price">
-            €${formatCurrency(matchingProduct.priceCents)}
+            ${matchingProduct.getPrice()}
             </div>
             <div class="product-quantity">
             <span>
