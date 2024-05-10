@@ -1,16 +1,17 @@
 "use strict"
-import {cart,removeFromCart,updateQuantity, updateDeliveryOption} from '../data/cart.js'
-import {products, getProduct} from '../data/products.js'
+import {Cart} from '../data/cart-class.js'
+import {getProduct} from '../data/products.js'
 import {formatCurrency} from '../utils/money.js';
-import { updateCartQuantity } from '../data/cart.js';
 import {deliveryOptions, getDeliveryOption} from '../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
+
+const cart = new Cart('cart-oop');
 
 export function renderOrderSummary(){
 
 let cartSummaryHTML = '';
 
-cart.forEach((cartItem)=>{
+cart.cartItems.forEach((cartItem)=>{
     const productId = cartItem.productId;
 
     const matchingProduct = getProduct(productId);
@@ -103,13 +104,13 @@ let UpdateLinks = document.querySelectorAll(`.js-update-quantity-link`);
         link.style.display = 'none';
         saveButton.addEventListener('click', ()=>{
             const newQuantity = Math.abs(Math.round(parseFloat(inputTag.value)));
-            updateQuantity(productId, newQuantity);
+            cart.updateQuantity(productId, newQuantity);
             const quantityLabel = document.querySelector(
                 `.js-quantity-label-${productId}`
             );
             quantityLabel.innerHTML = newQuantity;
         
-            updateCartQuantity();
+            cart.updateCartQuantity();
             link.style.display = 'inline';
             inputTag.classList.remove('is-editing-quantity');
             saveButton.classList.remove('is-editing-quantity');
@@ -121,7 +122,7 @@ let UpdateLinks = document.querySelectorAll(`.js-update-quantity-link`);
 document.querySelectorAll('.js-delete-link').forEach((link) => {
     link.addEventListener('click', ()=> {
         const productId = link.dataset.productId;
-        removeFromCart(productId);
+        cart.removeFromCart(productId);
         renderPaymentSummary();
 
         const container = document.querySelector(`.js-cart-item-container-${productId}`);
@@ -132,11 +133,11 @@ document.querySelectorAll('.js-delete-link').forEach((link) => {
 document.querySelectorAll('.js-delivery-option').forEach((element) => {
     element.addEventListener('click', ()=> {
         const { productId, deliveryOptionId } = element.dataset;
-        updateDeliveryOption(productId, deliveryOptionId);
+        cart.updateDeliveryOption(productId, deliveryOptionId);
         renderOrderSummary();
         renderPaymentSummary();
     });
 });
 }
 renderOrderSummary();
-updateCartQuantity();
+cart.updateCartQuantity();

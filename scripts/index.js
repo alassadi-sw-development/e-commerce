@@ -1,7 +1,9 @@
 "user strict"
-import {cart, addToCart} from './data/cart.js'
+import {Cart} from './data/cart-class.js'
 import {products as importedProdutcs} from './data/products.js'
 import {formatCurrency} from './utils/money.js';
+
+const cart = new Cart('cart-oop');
 
 let products = importedProdutcs.slice();
 
@@ -143,7 +145,7 @@ function renderProducts(){
 document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
     button.addEventListener("click", ()=>{
         const productId = button.dataset.productId;
-        addToCart(productId);
+        cart.addToCart(productId);
         updateCartQuantity();
         const addedMessage = document.querySelector(".js-add-to-cart-"+productId);
 
@@ -168,7 +170,7 @@ document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
 export function updateCartQuantity(){
     let cartQuantity = 0;
 
-    cart.forEach((cartItem)=>{
+    cart.cartItems.forEach((cartItem)=>{
         cartQuantity += cartItem.quantity;
     });
 
@@ -203,7 +205,7 @@ const addedMessageTimeouts = {};
 document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
     button.addEventListener("click", ()=>{
         const productId = button.dataset.productId;
-        addToCart(productId);
+        cart.addToCart(productId);
         updateCartQuantity();
 
         const addedMessage = document.querySelector(`.js-add-to-cart-${productId}`);
