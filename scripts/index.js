@@ -166,7 +166,7 @@ export function updateCartQuantity(){
         cartQuantity += cartItem.quantity;
     });
 
-    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+    document.querySelector('.js-cart-quantity').innerHTML = Number(cartQuantity);
 }
 
 function saveProductsToStorage(){
