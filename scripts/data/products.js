@@ -71,7 +71,7 @@ export function loadProducts(fun) {
         });
         console.log("Load products done!");
         fun();
-    } )
+    })
     xhr.open('GET', 'https://alassadi-sw-development.github.io/portfolio/products.json');
     xhr.send();
 }
