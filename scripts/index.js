@@ -1,9 +1,8 @@
 "user strict"
 import {cart} from './data/cart-class.js'
-import {products as importedProdutcs} from './data/products.js'
+import {products, loadProducts} from './data/products.js'
 
-let products = importedProdutcs.slice();
-
+loadProducts(renderProducts);
 const selectElement = document.querySelector("#sort-products");
 
 selectElement.addEventListener("change", sortProductsByOption);
@@ -23,6 +22,8 @@ searchbar.addEventListener('keydown', function(event) {
 
 const productsGrid = document.querySelector(".js-products-grid")
 function renderProducts(){
+
+    saveProductsToStorage()
         
     productsGrid.innerHTML="";
     
@@ -296,5 +297,3 @@ function sortProductsByOption() {
     }
 }
 updateCartQuantity()
-saveProductsToStorage()
-renderProducts()

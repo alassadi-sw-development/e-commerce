@@ -5,6 +5,7 @@ import {formatCurrency} from '../utils/money.js';
 import {deliveryOptions, getDeliveryOption} from '../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
 
+
 export function renderOrderSummary(){
 
 let cartSummaryHTML = '';
@@ -17,8 +18,6 @@ cart.cartItems.forEach((cartItem)=>{
     const deliveryOptionId = cartItem.deliveryOptionId;
 
     const deliveryOption = getDeliveryOption(deliveryOptionId);
-
-
 
     cartSummaryHTML +=`
     <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
@@ -35,7 +34,7 @@ cart.cartItems.forEach((cartItem)=>{
             ${matchingProduct.name}
             </div>
             <div class="product-price">
-            ${matchingProduct.getPrice()}
+            €${formatCurrency(matchingProduct.priceCents)}
             </div>
             <div class="product-quantity">
             <span>
