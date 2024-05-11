@@ -1,27 +1,18 @@
 "user strict"
 import {cart} from './data/cart-class.js'
-import {products, loadProducts} from './data/products.js'
+import {products, loadProductsFetch, sortingProducts, searchProducts,handleSearch} from './data/products.js'
 
-loadProducts(renderProducts);
-const selectElement = document.querySelector("#sort-products");
-
-selectElement.addEventListener("change", sortProductsByOption);
-
-const searchBtn = document.querySelector(".js-search-button");
-const searchbar = document.querySelector(".js-search-bar");
-
-searchBtn.addEventListener("click", handleSearch);
-
-searchbar.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        handleSearch();
-    }
+loadProductsFetch().then(() => {
+    updateCartQuantity()
+    saveProductsToStorage();
+    sortingProducts();
+    searchProducts();
+    renderProducts();
 });
 
 
-
 const productsGrid = document.querySelector(".js-products-grid")
-function renderProducts(){
+export function renderProducts(){
 
     saveProductsToStorage()
         
@@ -59,6 +50,7 @@ function renderProducts(){
     // Create rating stars image element
     const ratingStars = document.createElement('img');
     ratingStars.classList.add('product-rating-stars');
+    console.log(product);
     ratingStars.setAttribute("src", product.getStarsUrl());
     ratingStars.setAttribute('alt', 'product-rating-stars');
 
@@ -181,25 +173,6 @@ function saveProductsToStorage(){
     localStorage.setItem('products', JSON.stringify(products));
 }
 
-function handleSearch() {
-    let searchString = searchbar.value.trim().toLowerCase().replace(/\s/g, '');
-    let newProducts = [];
-
-    if (searchString){
-        products = JSON.parse(localStorage.getItem("products"));
-        products.forEach((product)=>{
-            if(product.name.toLowerCase().replace(/\s/g, '').includes(searchString)){
-                newProducts.push(product);
-            }
-        });
-        products = newProducts;
-        renderProducts();
-    }else {
-        products = JSON.parse(localStorage.getItem("products"));
-        renderProducts();
-    }
-}
-
 
 const addedMessageTimeouts = {};
 document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
@@ -226,74 +199,4 @@ document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
 });
 });
 });
-function sortProductsByOption() {
-    const selectedOption = this.options[this.selectedIndex];
-    switch(selectedOption.value){
-        case "A2Z":
-            function sortProductsByName(products) {
-                products.sort((a, b) => {
-                    const nameA = a.name.toUpperCase();
-                    const nameB = b.name.toUpperCase();
-                    if (nameA < nameB) {
-                        return -1;
-                    }
-                    if (nameA > nameB) {
-                        return 1;
-                    }
-                    return 0;
-                });
-                return products;
-            }
-            products = sortProductsByName(products);
-            console.log(products);
-            renderProducts();
-            break;
-        case "Z2A":
-            function sortProductsByNameDescending(products) {
-                products.sort((a, b) => {
-                    const nameA = a.name.toUpperCase();
-                    const nameB = b.name.toUpperCase();
-                    if (nameA > nameB) {
-                        return -1;
-                    }
-                    if (nameA < nameB) {
-                        return 1;
-                    }
-                    return 0;
-                });
-                return products;
-            }
-            products = sortProductsByNameDescending(products);
-            console.log(products);
-            renderProducts();
-            break;
-        case "high2low":
-            function sortProductsByPriceDescending(products) {
-                products.sort((a, b) => b.priceCents - a.priceCents);
-                return products;
-            }
-            products = sortProductsByPriceDescending(products);
-            console.log(products);
-            renderProducts();
-            break;
-        case "low2high":
-            function sortProductsByPriceAscending(products) {
-                products.sort((a, b) => a.priceCents - b.priceCents);
-                return products;
-            }
-            products = sortProductsByPriceAscending(products);
-            console.log(products);
-            renderProducts();
-            break;
-        case "HighestRating":
-            function sortProductsByRatingDescending(products) {
-                products.sort((a, b) => b.rating.stars - a.rating.stars);
-                return products;
-            }
-            products = sortProductsByRatingDescending(products);
-            console.log(products);
-            renderProducts();
-            break;
-    }
-}
-updateCartQuantity()
+
