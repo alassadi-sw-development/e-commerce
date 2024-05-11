@@ -33,45 +33,75 @@ class Product {
     getPrice() {
         return "€"+formatCurrency(this.priceCents)
     }
+    extraInfoHTML(){
+        const link = document.createElement('a');
+        return link
+    }
+}
+
+class Clothing extends Product {
+    sizeChartLink;
+
+    constructor(productDetails) {
+        super(productDetails);
+        this.sizeChartLink = productDetails.sizeChartLink;
+    }
+
+    extraInfoHTML(){
+        const link = document.createElement('a');
+        link.href = this.sizeChartLink;
+        link.target = '_blank';
+        link.textContent = 'Size Chart';
+    
+        return link
+    }
 }
 
 export const products = [{
     id: "A1",
-    image: 'img/Products/Product1.png',
-    name: 'Product 1',
-    rating: {
-        stars: 3.5,
-        count: 87
-    },
-    priceCents: 2095
-},{
-    id: "A2",
-    image: 'img/Products/Product2.png',
-    name: 'Product 2',
-    rating: {
-        stars: 4,
-        count: 127
-    },
-    priceCents: 490
-},{
-    id: "A3",
-    image: 'img/Products/Product3.png',
-    name: 'Product 3',
+    image: 'img/Products/Tshirt.png',
+    name: 'T-Shirt',
     rating: {
         stars: 4.5,
-        count: 56
+        count: 2758
     },
-    priceCents: 799
+    priceCents: 3299,
+    type : "clothing",
+    sizeChartLink: "img/clothing-size-chart.png"
 },{
-    id: "B1",
-    image: 'img/Products/Product4.png',
-    name: 'Product 4',
+    id: "A2",
+    image: 'img/Products/shirt.png',
+    name: 'Shirt',
     rating: {
         stars: 5,
-        count: 2197
+        count: 78
     },
-    priceCents: 299
+    priceCents: 4599,
+    type : "clothing",
+    sizeChartLink: "img/clothing-size-chart.png"
+},{
+    id: "B1",
+    image: 'img/Products/socks.png',
+    name: 'Socks',
+    rating: {
+        stars: 1.5,
+        count: 8
+    },
+    priceCents: 599
+},{
+    id: "B2",
+    image: 'img/Products/shoes.png',
+    name: 'Shoes',
+    rating: {
+        stars: 2,
+        count: 1758
+    },
+    priceCents: 11999
 }].map((productDetails)=>{
-    return new Product(productDetails);
+    if (productDetails.type === "clothing"){
+        return new Clothing(productDetails);
+    }else{
+        return new Product(productDetails);
+    }
 });
 console.log(products);

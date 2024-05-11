@@ -101,6 +101,7 @@ function renderProducts(){
     const productSpacer = document.createElement('div');
     productSpacer.classList.add('product-spacer');
 
+
     // Create added to cart message container
     const addedToCart = document.createElement('div');
     addedToCart.classList.add('added-to-cart', "js-add-to-cart-"+product.id);
@@ -131,6 +132,7 @@ function renderProducts(){
     productContainer.appendChild(ratingContainer);
     productContainer.appendChild(productPrice);
     productContainer.appendChild(quantityContainer);
+    productContainer.appendChild(product.extraInfoHTML())
     productContainer.appendChild(productSpacer);
     productContainer.appendChild(addedToCart);
     productContainer.appendChild(addToCartButton);
