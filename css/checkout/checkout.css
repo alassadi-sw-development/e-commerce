@@ -208,6 +208,10 @@
   
     margin-top: 11px;
     margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: bolder;
+    text-shadow: #7b7b7b 2px 2px 2px;
+    color: white;
   }
   .quantity-input{
     width: 2rem;
