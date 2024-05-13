@@ -1,14 +1,17 @@
 "user strict"
 import {cart} from './data/cart-class.js'
-import {products, loadProductsFetch, sortingProducts, searchProducts,handleSearch} from './data/products.js'
+import {products, loadProductsFetch, sortingProducts, searchProducts} from './data/products.js'
 
-loadProductsFetch().then(() => {
-    updateCartQuantity()
+async function main() {
+    await loadProductsFetch();
     saveProductsToStorage();
     sortingProducts();
     searchProducts();
     renderProducts();
-});
+    updateCartQuantity();
+}
+
+main();
 
 
 const productsGrid = document.querySelector(".js-products-grid")
@@ -50,7 +53,6 @@ export function renderProducts(){
     // Create rating stars image element
     const ratingStars = document.createElement('img');
     ratingStars.classList.add('product-rating-stars');
-    console.log(product);
     ratingStars.setAttribute("src", product.getStarsUrl());
     ratingStars.setAttribute('alt', 'product-rating-stars');
 
@@ -161,12 +163,11 @@ document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
 
 export function updateCartQuantity(){
     let cartQuantity = 0;
-
     cart.cartItems.forEach((cartItem)=>{
         cartQuantity += cartItem.quantity;
     });
 
-    document.querySelector('.js-cart-quantity').innerHTML = Number(cartQuantity);
+    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
 }
 
 function saveProductsToStorage(){

@@ -8,12 +8,10 @@ async function loadPage() {
   } catch(error){
     console.log("Unexpected Error, Please try again later");
   }
-
-  renderOrderSummary();
   renderPaymentSummary();
+  renderOrderSummary();
 }
-loadPage();
-
+loadPage()
 
 /* loadProductsFetch().then(()=>{
   renderOrderSummary();
