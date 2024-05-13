@@ -2,20 +2,14 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "signupForm.mjs",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "nodemon ./src/signupForm.mjs",
-    "start": "node ./src/signupForm.mjs"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.19.2"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.0"
-  },
-  "type": "module"
+  }
 }
