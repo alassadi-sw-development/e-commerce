@@ -69,6 +69,32 @@ export function renderPaymentSummary(){
 
     document.querySelector('.js-payment-summary').innerHTML = paymentSummaryHTML;
 
+    const PlaceOrderBtn = document.querySelector(".js-place-order");
+    PlaceOrderBtn.addEventListener("click", () => {
+        sendCartPatchRequest();
+    });
+    
+    async function sendCartPatchRequest() {
+        const UpdateCartList = cart;
+        try {
+            const confirmResponse = await fetch('//localhost:8081/update-cart', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ arrayData: UpdateCartList })
+            });
+            if (confirmResponse.ok) {
+                console.log('PATCH request successful');
+            } else {
+                console.error('PATCH request failed');
+            }
+        } catch (error) {
+            console.error('Error occurred:', error);
+        }
+        //window.location.href = "orders.html";
+    }
+    
 /*     document.querySelector('.js-place-order').addEventListener("click", async ()=>{
         try {            
             const response = await fetch("https://supersimplebackend.dev/orders", {

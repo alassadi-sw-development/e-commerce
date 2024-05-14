@@ -1,13 +1,18 @@
 import express from "express";
 import cors from "cors";
+import bodyParser from 'body-parser';
+
+
 const app = express();
 const PORT = process.env.PORT || 8081;
-
 const allowedOrigins = ['http://127.0.0.1:5500','http://127.0.0.1:5501', 'http://127.0.0.1:5502', 'http://127.0.0.1:5503'];
 
+
+app.use(bodyParser.json());
 app.use(cors({
   origin: allowedOrigins
 }));
+
 
 const users = [
   {"id":1,"userName":"admin", "passWord":"admin123","firstName": "admin", "lastName":"Admin", "Street": "admin's Street" ,"city": "admin's city","PLZ": "1234","state": "admin's state"},
@@ -69,8 +74,7 @@ const products = [
   }
 ]
 
-
-
+let orders = [];
 
 app.get("/", (request, response)=>{
   response.status(201).send({msg : "Hello"});
@@ -82,6 +86,14 @@ app.get("/users", (request, response)=>{
 
 app.get("/products", (request, response)=>{
   response.status(201).send(products);
+});
+
+app.patch("/update-cart", (request, response)=>{
+    const newCart = request.body.arrayData;
+    orders.unshift(newCart);
+    console.log('Received updated array:', newCart);
+    response.status(200).send('Array updated successfully');
+    console.log(orders);
 });
 
 app.listen(PORT, ()=>{

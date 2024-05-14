@@ -135,6 +135,7 @@ document.querySelectorAll('.js-delivery-option').forEach((element) => {
         renderPaymentSummary();
     });
 });
+
 }
 renderOrderSummary();
 cart.updateCartQuantity();
