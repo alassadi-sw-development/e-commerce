@@ -198,10 +198,11 @@ class Clothing extends Product {
     }
 }
 
-let products = [];
 
+let products = [];
 function loadProductsFetch(){
-    const promise = fetch('https://alassadi-sw-development.github.io/portfolio/products.json').then((response)=>{
+    const promise = fetch('http://127.0.0.1:8081/products').then((response)=>{
+    //const promise = fetch('https://alassadi-sw-development.github.io/portfolio/products.json').then((response)=>{
     return response.json();
     }).then((productsData)=>{
         products = productsData.map((productDetails)=>{
