@@ -92,7 +92,14 @@ form.addEventListener('submit', async (event) => {
     });
 
     const result = await response.json();
-    console.log(result);
+    for(let key in result){
+      const value = result[key]
+      const msg = document.querySelector(`.js-${key}`);
+      console.log(msg, value);
+      const userExistsMsg = document.createElement("p");
+      msg.insertAdjacentElement('beforebegin', userExistsMsg);
+      userExistsMsg.innerHTML = value +" "+'<a href="signinForm.html">Sign in here</a>'
+    }
 
     if (response.ok) {
       console.log("User data and image uploaded successfully");
@@ -156,7 +163,6 @@ ctx.lineWidth = 2;
 ctx.lineJoin = ctx.lineCap = 'round';
 
 const colors = ['#FF6666', '#6699CC', '#33CC66', '#CC9966', '#9966CC'];
-
 function getRandomColor() {
   const randomIndex = Math.floor(Math.random() * colors.length);
   return colors[randomIndex];

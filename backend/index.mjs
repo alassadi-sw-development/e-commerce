@@ -1,14 +1,15 @@
 import express, { query } from "express";
 import cors from "cors";
 import bodyParser from 'body-parser';
-/* import multer from 'multer'; */
 import fs from 'fs';
 import path from 'path';
+
+// import handle data Functions
+import {addUserToJSON, addCartToUser, getCartsByUsername} from "./handleData.mjs"
 
 const app = express();
 const PORT = process.env.PORT || 8081;
 const allowedOrigins = ['http://127.0.0.1:5500','http://127.0.0.1:5501', 'http://127.0.0.1:5502', 'http://127.0.0.1:5503'];
-/* const upload = multer({ dest: 'uploads/' }); */
 const __dirname = path.resolve();
 console.log(__dirname);
 
@@ -108,14 +109,25 @@ app.get("/products", (request, response)=>{
 });
 
 app.patch("/update-cart", (request, response)=>{
-    const newCart = request.body.arrayData;
-    orders.unshift(newCart);
-    console.log('Received updated array:', newCart);
-    response.status(200).send('Array updated successfully');
-    console.log(orders);
+    const cartItems = request.body.arrayData;
+    console.log(cartItems);
+    addCartToUser("./data.json", "kalassad564", cartItems)
+});
+app.get("/myCart", (request, response)=>{
+  const myCart = getCartsByUsername("./data.json","kalassad564");
+  if (myCart) return response.status(200).send(myCart);
+  else return response.sendstatus(404);
 });
 
 app.post("/signUp", (request, response)=>{
+
+  const username = request.body.username;
+  console.log();
+  if (users.find(user => user.username === username)){
+    return response.status(400).send({ username: 'User exists, log in instead?' });
+  }else {
+    console.log("you are good to go");
+  }
   const imageURL = request.body.signature;
   const matches = imageURL.match(/^data:image\/([A-Za-z-+/]+);base64,(.+)$/);
   if (!matches || matches.length !== 3) {
@@ -124,7 +136,7 @@ app.post("/signUp", (request, response)=>{
 
   const imageBuffer = Buffer.from(matches[2], 'base64');
   const fileType = matches[1];
-  const fileName = `signature_${request.body.firstname}_${request.body.firstname}.${fileType}`;
+  const fileName = `signature_${username}.${fileType}`;
   const uploadDir = path.join(__dirname, 'signatures');
 
   if (!fs.existsSync(uploadDir)) {
@@ -139,6 +151,19 @@ app.post("/signUp", (request, response)=>{
       return response.status(500).send('Failed to save image');
   }
   });
+
+  const DataJSON = "./data.json";
+
+  const formInputs = request.body; // Assuming request.body contains the form data
+  const entries = Object.entries(formInputs);
+  const newUserArr = entries.slice(0, -1); // Exclude the last entry (signature)
+  const newUser = Object.fromEntries(newUserArr);
+  newUser.carts = [];
+  console.log(newUser);
+
+  addUserToJSON(DataJSON, newUser)
+  
+  addCartToUser(DataJSON, username, cartItems)
 
 
   return response.send({msg : "signup"})

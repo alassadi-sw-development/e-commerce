@@ -76,6 +76,11 @@ export function renderPaymentSummary(){
     
     async function sendCartPatchRequest() {
         const UpdateCartList = cart;
+        const currentDate = new Date();
+        const options = { weekday: 'long', month: 'long', day: 'numeric' };
+        const formattedDate = currentDate.toLocaleDateString('en-US', options);
+        UpdateCartList.orderDate = formattedDate;
+        UpdateCartList.totalPrice = formatCurrency(totalCents);
         try {
             const confirmResponse = await fetch('//localhost:8081/update-cart', {
                 method: 'PATCH',
