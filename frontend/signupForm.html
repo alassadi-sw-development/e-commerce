@@ -18,14 +18,14 @@
     </article>
   </header>
   <div class="form-container">
-  <form action="#" method="post">
+  <form id="signup-form">
     <h2>Sign Up</h2>
     <div class="js-name-container" style="display:flex; justify-content: space-between;">
       <input type="text" name="firstname" class="js-firstname" placeholder="First Name" style="width: 48%;" required>
       <input type="text" name="lastname" class="js-lastname" placeholder="Last Name" style="width: 48%;" required>
     </div>
-    <input type="text" name="username" class="js-username" placeholder="Username" required>
-    <input type="email" name="email" class="js-email" placeholder="Email Address" required>
+    <input type="text" name="username" class="js-username" placeholder="Username">
+    <input type="email" name="email" class="js-email" placeholder="Email Address">
     <input type="password" name="password" class="js-password" placeholder="Password" required>
     <div>
       <input type="text" name="street_address" class="js-street-address" placeholder="Street Address" style="width: 49.4%;" required>
@@ -34,18 +34,25 @@
       <input type="text" name="postal_code" class="js-postal-code" placeholder="Postal Code" style="width: 49.4%;" required>
     </div>
     <div class="disclaimer">
+      <h2>DISCLAIMER</h2>
       <p>Please note that this website is made for learning purposes. The developer of this website is not responsible for any data you provide. <br><br>
         <strong>DO NOT SUBMIT REAL INFORMATION!</strong>
       </p>
-      <br>
-      <div class="checkbox-container">
-        <input type="checkbox" id="js-understand-checkbox" required>
-        <label for="js-understand-checkbox">I have read the disclaimer and I understand it</label>
+      <div class="signature-pad-form">
+        <div class="checkbox-container">
+          <input type="checkbox" id="js-understand-checkbox">
+          <label for="js-understand-checkbox">I have read the disclaimer and I understand it</label>
+        </div>
+        <p><b>SIGN HERE</b></p>
+
+        <canvas height="100" width="350" class="signature-pad"></canvas>
       </div>
+      <p><a href="#" class="clear-Button">Clear</a></p>
     </div>
-    <input type="submit" value="Sign Up">
+    <input type="submit" value="Sign Up" id="signupBtn">
   </form>
   <a href="signinForm.html" class="signup-link">you have an account already? Sign in here.</a>
 </div>
+<script src="./scripts/data/signupForm.js"></script>
 </body>
 </html>
