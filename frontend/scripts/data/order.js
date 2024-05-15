@@ -1,6 +1,15 @@
-"use strict"
-
+import {cart} from '../data/cart-class.js'
 const products = JSON.parse(localStorage.getItem("searchProducts"));
+console.log(cartQuantity());
+
+const cartCount = document.querySelector(".js-cart-quantity").innerHTML = cartQuantity()
+
+function cartQuantity(){
+  let quantity = 0;
+  cart.cartItems.forEach( element => quantity += element.quantity)
+  return quantity
+}
+
 console.log(products);
 document.addEventListener("DOMContentLoaded", function() {
   fetch("//localhost:8081/myCart")
@@ -50,20 +59,16 @@ function renderContent(data) {
           ${mapProductDetails(element.productId, products).name}
         </div>
         <div class="product-delivery-date">
-          Arriving on: ${calculateDeliveryDate(data[i].orderDate, element.deliveryOptionId)}
+          Expected arrival: ${calculateDeliveryDate(data[i].orderDate, element.deliveryOptionId)}
         </div>
         <div class="product-quantity">
           Quantity: ${element.quantity}
         </div>
-        <button class="buy-again-button button-primary">
-          <img class="buy-again-icon" src="">
-          <span class="buy-again-message">Buy it again</span>
-        </button>
       </div>
 
       <div class="product-actions">
         <a href="tracking.html">
-          <button class="track-package-button button-secondary">
+          <button class="track-package-button button-secondary" disabled>
             Track package
           </button>
         </a>
