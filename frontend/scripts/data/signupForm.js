@@ -3,6 +3,8 @@ const form = document.querySelector('#signup-form');
 const canvas = document.querySelector('.signature-pad');
 const clearButton = document.querySelector('.clear-Button');
 const ctx = canvas.getContext('2d');
+const userExistsMsg = document.createElement("p");
+const signatureInvalid = document.createElement("p");
 let writingMode = false;
 
 const usernameRegex = /^[a-zA-Z0-9_]{3,16}$/;
@@ -92,31 +94,30 @@ form.addEventListener('submit', async (event) => {
     });
 
     const result = await response.json();
+    console.log(result);
     for(let key in result){
+      if (key === 'username'){
       const value = result[key]
       const msg = document.querySelector(`.js-${key}`);
       console.log(msg, value);
-      const userExistsMsg = document.createElement("p");
       msg.insertAdjacentElement('beforebegin', userExistsMsg);
       userExistsMsg.innerHTML = value +" "+'<a href="signinForm.html">Sign in here</a>'
+    }
+      if (key === 'signature-pad'){
+      const value = result[key]
+      const msg = document.querySelector(`.js-${key}`);
+      console.log(msg, value);
+      msg.insertAdjacentElement('beforebegin', signatureInvalid);
+      signatureInvalid.innerHTML = value +" "+'<a href="index.html">return to HomePage</a>'
+    }
     }
 
     if (response.ok) {
       console.log("User data and image uploaded successfully");
-      window.location.href = 'signinForm.html';
+      //window.location.href = 'signinForm.html';
     } else {
       console.error("Failed to upload data and image");
     }
-
-    const image = document.createElement('img');
-    image.id = "signature";
-    image.name = "signature";
-    image.src = imageURL;
-    image.height = canvas.height;
-    image.width = canvas.width;
-    image.style.display = 'block';
-    form.appendChild(image);
-    clearPad();
 
   } catch (error) {
     console.error('Error:', error);
@@ -148,7 +149,7 @@ const handlePointerMove = (event)=> {
 
 const handlePointerUp = () => {
   writingMode = false;
-  /* console.log('point up'); */
+  /* console.log('pointer up'); */
 }
 
 const handlePointerDown = (event)=>{
@@ -173,3 +174,5 @@ ctx.strokeStyle = getRandomColor();
 canvas.addEventListener('pointerdown', handlePointerDown, {passive: true})
 canvas.addEventListener('pointerup', handlePointerUp, {passive: true})
 canvas.addEventListener('pointermove', handlePointerMove, {passive: true})
+
+//mouseleave

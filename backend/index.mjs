@@ -1,35 +1,35 @@
-import express, { query } from "express";
+import express from "express";
+import  { query, validationResult, body } from "express-validator";
+import expressEjsLayouts from "express-ejs-layouts";
 import cors from "cors";
 import bodyParser from 'body-parser';
 import fs from 'fs';
 import path from 'path';
-
-// import handle data Functions
-import {addUserToJSON, addCartToUser, getCartsByUsername} from "./handleData.mjs"
+import {addUserToJSON, addCartToUser, getCartsByUsername, readJSONFile} from "./handleData.mjs"
+import session from "express-session";
 
 const app = express();
 const PORT = process.env.PORT || 8081;
 const allowedOrigins = ['http://127.0.0.1:5500','http://127.0.0.1:5501', 'http://127.0.0.1:5502', 'http://127.0.0.1:5503'];
 const __dirname = path.resolve();
-console.log(__dirname);
 
+app.use(session({
+  secret: 'khalid the developer',
+  saveUninitialized: false,
+  resave:false,
+  cookie:{
+    maxAge: 6000 * 60,
+  }
+}))
+app.use(expressEjsLayouts)
+app.set("view engine", "ejs");
 app.use(bodyParser.json());
 app.use(cors({
   origin: allowedOrigins
 }));
-
-const users = [
-  {"id":1,"username":"admin", "password":"admin123","firstName": "admin", "lastName":"Admin", "Street": "admin's Street" ,"city": "admin's city","PLZ": "1234","state": "admin's state"},
-  {"id":2,"username":"khalid", "password":"password123","firstName": "Khalid", "lastName":"Al Assadi", "Street": "khalid's Street" ,"city": "khalid's city","PLZ": "1234","state": "khalid's state"},
-  {"id":3,"username":"user1", "password":"password1","firstName": "John", "lastName":"Doe", "Street": "123 Main St" ,"city": "Anytown","PLZ": "5678","state": "Somestate"},
-  {"id":4,"username":"user2", "password":"password2","firstName": "Jane", "lastName":"Smith", "Street": "456 Elm St" ,"city": "Othertown","PLZ": "9012","state": "Anotherstate"},
-  {"id":5,"username":"user3", "password":"password3","firstName": "David", "lastName":"Johnson", "Street": "789 Oak St" ,"city": "Newtown","PLZ": "3456","state": "Differentstate"},
-  {"id":6,"username":"user4", "password":"password4","firstName": "Sarah", "lastName":"Williams", "Street": "101 Pine St" ,"city": "Smalltown","PLZ": "7890","state": "Unkownstate"},
-  {"id":7,"username":"user5", "password":"password5","firstName": "Michael", "lastName":"Brown", "Street": "202 Maple St" ,"city": "Largetown","PLZ": "2345","state": "Knownstate"},
-  {"id":8,"username":"user6", "password":"password6","firstName": "Emily", "lastName":"Jones", "Street": "303 Cedar St" ,"city": "Oldtown","PLZ": "6789","state": "Famousstate"},
-  {"id":9,"username":"user7", "password":"password7","firstName": "Daniel", "lastName":"Miller", "Street": "404 Walnut St" ,"city": "Moderntown","PLZ": "1234","state": "Uniquestate"},
-  {"id":10,"username":"user8", "password":"password8","firstName": "Jessica", "lastName":"Davis", "Street": "505 Birch St" ,"city": "Villagetown","PLZ": "5678","state": "Interestingstate"}
-];
+app.use(express.static("public"));
+//app.use('/css', express.static(""))
+const emptySignature = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAV4AAABkCAYAAADOvVhlAAAAAXNSR0IArs4c6QAAAzpJREFUeF7t1MEJAAAIAzG7/9Juca+4QCHI7RwBAgQIpAJL14wRIECAwAmvJyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAg8HqAAZbdjCY4AAAAASUVORK5CYII="
 const products = [
   {
       "id": "A1",
@@ -76,33 +76,13 @@ const products = [
       "priceCents": 11999
   }
 ];
-let orders = [];
 
 app.get("/", (request, response)=>{
+  console.log(request.session);
+  console.log(request.sessionID);
+  request.session.visited =true;
   response.status(201).send({msg : "Hello"});
 });
-
-app.get("/users", (request, response)=>{
-  console.log(request.query);
-  const {query: {filter,value}} = request;
-  if(!filter && !value) return response.status(201).send(users);
-  if (filter && value) {
-    return response.send(users.filter((user) => user[filter].includes(value)));
-  }
-  return response.status(201).send(users);
-});
-
-app.get("/users/:id", (request, response)=>{
-  console.log(request.params);
-  const parsedId =parseInt(request.params.id);
-  console.log(parsedId);
-  if(isNaN(parsedId)){ return response.status(400).send({msg: "Bad request"})}
-
-  const findUser = users.find((user)=> user.id === parsedId);
-
-  if(!findUser) { return response.sendstatus(404)};
-  return response.send(findUser)
-})
 
 app.get("/products", (request, response)=>{
   response.status(201).send(products);
@@ -110,25 +90,23 @@ app.get("/products", (request, response)=>{
 
 app.patch("/update-cart", (request, response)=>{
     const cartItems = request.body.arrayData;
-    console.log(cartItems);
-    addCartToUser("./data.json", "kalassad564", cartItems)
+    addCartToUser("./data.json", "khalid", cartItems)
 });
 app.get("/myCart", (request, response)=>{
-  const myCart = getCartsByUsername("./data.json","kalassad564");
+  const myCart = getCartsByUsername("./data.json","khalid");
   if (myCart) return response.status(200).send(myCart);
   else return response.sendstatus(404);
 });
 
 app.post("/signUp", (request, response)=>{
-
+  const jsonData = readJSONFile("./data.json")
   const username = request.body.username;
-  console.log();
-  if (users.find(user => user.username === username)){
+  if (jsonData.users.find(user => user.username === username)){
     return response.status(400).send({ username: 'User exists, log in instead?' });
-  }else {
-    console.log("you are good to go");
   }
+
   const imageURL = request.body.signature;
+  if (emptySignature == imageURL) {return response.status(400).send({ "signature-pad" : "Invalid Signature, must sign to sign up!"})}
   const matches = imageURL.match(/^data:image\/([A-Za-z-+/]+);base64,(.+)$/);
   if (!matches || matches.length !== 3) {
     return response.status(400).send('Invalid input string');
@@ -144,7 +122,6 @@ app.post("/signUp", (request, response)=>{
   }
 
   const filePath = path.join(uploadDir, fileName);
-  console.log(filePath);
   fs.writeFile(filePath, imageBuffer, err => {
     if (err) {
       console.error('Error writing file', err);
@@ -159,19 +136,24 @@ app.post("/signUp", (request, response)=>{
   const newUserArr = entries.slice(0, -1); // Exclude the last entry (signature)
   const newUser = Object.fromEntries(newUserArr);
   newUser.carts = [];
-  console.log(newUser);
 
   addUserToJSON(DataJSON, newUser)
   
-  addCartToUser(DataJSON, username, cartItems)
+  //addCartToUser(DataJSON, username, cartItems)
 
 
-  return response.send({msg : "signup"})
+  return response.status(200).send({msg : "signup"})
 });
 
 app.post("/signin", (request, response)=>{
-  console.log(request.body);
   return response.send({msg : "signin"})
+})
+
+app.get('', (request, response)=>{
+  response.render('index', {title : "users"})
+})
+app.get('/usersCarts', (request, response)=>{
+  response.render('usersCarts', {title : "user's Carts"})
 })
 
 app.listen(PORT, ()=>{

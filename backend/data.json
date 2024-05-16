@@ -1,16 +1,42 @@
 {
   "users": [
     {
-      "firstname": "khalid-dev",
-      "lastname": "Al Assadi",
-      "username": "kalassad564",
-      "email": "Khalid@somewhere.com",
-      "password": "adsa",
+      "firstname": "Khalid",
+      "lastname": "The Dev",
+      "username": "khalid",
+      "email": "khalid@somewhere.com",
+      "password": "123456789",
       "street_address": "street",
       "city": "City",
       "state": "State",
       "postal_code": "1234",
       "carts": [
+        {
+          "cartItems": [
+            {
+              "productId": "A1",
+              "quantity": 1,
+              "deliveryOptionId": "1"
+            },
+            {
+              "productId": "A2",
+              "quantity": 2,
+              "deliveryOptionId": "1"
+            },
+            {
+              "productId": "B1",
+              "quantity": 2,
+              "deliveryOptionId": "1"
+            },
+            {
+              "productId": "B2",
+              "quantity": 1,
+              "deliveryOptionId": "1"
+            }
+          ],
+          "orderDate": "Thursday, May 16",
+          "totalPrice": "305.76"
+        },
         {
           "cartItems": [
             {
@@ -78,14 +104,26 @@
       ]
     },
     {
-      "firstname": "asdad",
-      "lastname": "adsad",
-      "username": "kalassad564",
-      "email": "Khalid@somewhere.com",
-      "password": "ada",
+      "firstname": "admin",
+      "lastname": "admin",
+      "username": "admin",
+      "email": "admin@elvrum.com",
+      "password": "admin",
       "street_address": "street",
       "city": "City",
-      "state": "dada",
+      "state": "State",
+      "postal_code": "1234",
+      "carts": []
+    },
+    {
+      "firstname": "khalid-dev",
+      "lastname": "Al Assadi",
+      "username": "empty",
+      "email": "Khalid@somewhere.com",
+      "password": "12346579",
+      "street_address": "street",
+      "city": "City",
+      "state": "State",
       "postal_code": "1234",
       "carts": []
     },
@@ -94,7 +132,7 @@
       "lastname": "Al Assadi",
       "username": "kalassad564",
       "email": "Khalid@somewhere.com",
-      "password": "fa",
+      "password": "126345679",
       "street_address": "street",
       "city": "City",
       "state": "State",
