@@ -1,6 +1,7 @@
 import {cart} from '../data/cart-class.js'
 const products = JSON.parse(localStorage.getItem("searchProducts"));
-console.log(cartQuantity());
+let UserDetails = JSON.parse(sessionStorage.getItem("UserDetails"));
+console.log(UserDetails.username);
 
 const cartCount = document.querySelector(".js-cart-quantity").innerHTML = cartQuantity()
 
@@ -12,7 +13,7 @@ function cartQuantity(){
 
 console.log(products);
 document.addEventListener("DOMContentLoaded", function() {
-  fetch("//localhost:8081/myCart")
+  fetch(`//localhost:8081/myCart?username=${UserDetails.username}`)
       .then(response => response.json())
       .then(data => {
           renderContent(data);
@@ -120,3 +121,17 @@ function mapProductDetails(ItemId, products) {
   const product = products.find(product => product.id === ItemId);
   return product || null;
 }
+
+const signout = document.querySelector(".js-signout")
+
+signout.addEventListener("click", async (event) => {
+  event.preventDefault();
+
+  try {
+    sessionStorage.removeItem('UserDetails');
+    console.log("UserDetails removed from sessionStorage");
+    window.location.href = "index.html";
+  } catch (error) {
+    console.error("Error clearing sessionStorage:", error);
+  }
+});

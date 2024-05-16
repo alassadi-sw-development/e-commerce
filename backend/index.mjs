@@ -1,4 +1,4 @@
-import express from "express";
+import express, { response } from "express";
 import  { query, validationResult, body } from "express-validator";
 import expressEjsLayouts from "express-ejs-layouts";
 import cors from "cors";
@@ -18,7 +18,7 @@ app.use(session({
   saveUninitialized: false,
   resave:false,
   cookie:{
-    maxAge: 6000 * 60,
+    maxAge: 6000 * 60
   }
 }))
 app.use(expressEjsLayouts)
@@ -77,23 +77,18 @@ const products = [
   }
 ];
 
-app.get("/", (request, response)=>{
-  console.log(request.session);
-  console.log(request.sessionID);
-  request.session.visited =true;
-  response.status(201).send({msg : "Hello"});
-});
-
 app.get("/products", (request, response)=>{
   response.status(201).send(products);
 });
 
 app.patch("/update-cart", (request, response)=>{
     const cartItems = request.body.arrayData;
-    addCartToUser("./data.json", "khalid", cartItems)
+    console.log(request.body.arrayData);
+    addCartToUser("./data.json", request.body.arrayData.username, cartItems)
 });
+
 app.get("/myCart", (request, response)=>{
-  const myCart = getCartsByUsername("./data.json","khalid");
+  const myCart = getCartsByUsername("./data.json",request.query.username);
   if (myCart) return response.status(200).send(myCart);
   else return response.sendstatus(404);
 });
@@ -131,23 +126,36 @@ app.post("/signUp", (request, response)=>{
 
   const DataJSON = "./data.json";
 
-  const formInputs = request.body; // Assuming request.body contains the form data
+  const formInputs = request.body; 
   const entries = Object.entries(formInputs);
-  const newUserArr = entries.slice(0, -1); // Exclude the last entry (signature)
+  const newUserArr = entries.slice(0, -1);
   const newUser = Object.fromEntries(newUserArr);
   newUser.carts = [];
 
   addUserToJSON(DataJSON, newUser)
-  
-  //addCartToUser(DataJSON, username, cartItems)
-
 
   return response.status(200).send({msg : "signup"})
 });
 
 app.post("/signin", (request, response)=>{
-  return response.send({msg : "signin"})
+  const { body : {username,password}} = request;
+  const jsonData = readJSONFile("./data.json");
+  const findUser = jsonData.users.find((user)=> user.username === username);
+  if(!findUser) response.status(401).send({username : "username does not exist"});
+  if (findUser.password !== password) return response.status(401).send({password : "wrong password"});
+  console.log(findUser);
+  findUser.password= "****"
+  request.session.user = findUser;
+  return response.status(200).send(JSON.stringify(findUser))
 })
+
+app.get("/signin/status", (request, response) => {
+  /* request.sessionStore.get(request.sessionID, (err, session) => 
+  {console.log(session)}) */
+  return request.session.user ? response.status(200).send( request.session.user.username) : response.status(401).send({status : "Not Authenticated"});
+});
+
+
 
 app.get('', (request, response)=>{
   response.render('index', {title : "users"})
@@ -159,3 +167,4 @@ app.get('/usersCarts', (request, response)=>{
 app.listen(PORT, ()=>{
   console.log(`Running on http://localhost:${PORT}`);
 });
+

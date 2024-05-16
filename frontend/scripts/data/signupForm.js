@@ -114,7 +114,7 @@ form.addEventListener('submit', async (event) => {
 
     if (response.ok) {
       console.log("User data and image uploaded successfully");
-      //window.location.href = 'signinForm.html';
+      window.location.href = 'signinForm.html';
     } else {
       console.error("Failed to upload data and image");
     }

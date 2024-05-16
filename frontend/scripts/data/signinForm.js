@@ -5,13 +5,8 @@ form.addEventListener('submit', (event) => {
   event.preventDefault();
 
   const formData = new FormData(form);
-
   const signinData = JSON.stringify(Object.fromEntries(formData));
   console.log(signinData);
-
- /*  for (let item of formData){
-    console.log(item[0], item[1]);
-  } */
 
   fetch("//localhost:8081/signin", {
     method: "POST",
@@ -19,24 +14,12 @@ form.addEventListener('submit', (event) => {
     headers: {
       "Content-Type": "application/json"
     }
-  }).then(res => res.json()).then(res=>console.log(res))
-
-})
-
-/* 
-
-    // Populate formData inside the event listener
-    formData.append('firstname', document.querySelector('.js-firstname').value);
-    formData.append('lastname', document.querySelector('.js-lastname').value);
-    formData.append('username', document.querySelector('.js-username').value);
-    formData.append('email', document.querySelector('.js-email').value);
-    formData.append('password', document.querySelector('.js-password').value);
-    formData.append('street_address', document.querySelector('.js-street-address').value);
-    formData.append('city', document.querySelector('.js-city').value);
-    formData.append('state', document.querySelector('.js-state').value);
-    formData.append('postal_code', document.querySelector('.js-postal-code').value);
-
-    console.log(formData);
-  });
-
-  console.log(formData); */
+  }).then(res => res.json())
+    .then(res => {
+      sessionStorage.setItem("UserDetails", JSON.stringify(res));  // Ensure the response is saved as a string
+      window.location.href = "index.html";  // Redirect after saving the data
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+});
