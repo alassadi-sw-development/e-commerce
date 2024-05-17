@@ -1,0 +1,143 @@
+[
+  {
+    "id": "A1",
+    "image": "img/Products/Tshirt.png",
+    "name": "T-Shirt",
+    "rating": { "stars": 4.5, "count": 2758 },
+    "priceCents": 3299,
+    "type": "clothing",
+    "sizeChartLink": "img/clothing-size-chart.png"
+  },
+  {
+    "id": "A2",
+    "image": "img/Products/shirt.png",
+    "name": "Shirt",
+    "rating": { "stars": 5, "count": 78 },
+    "priceCents": 4599,
+    "type": "clothing",
+    "sizeChartLink": "img/clothing-size-chart.png"
+  },
+  {
+    "id": "B1",
+    "image": "img/Products/socks.png",
+    "name": "Socks",
+    "rating": { "stars": 1.5, "count": 8 },
+    "priceCents": 599
+  },
+  {
+    "id": "B2",
+    "image": "img/Products/shoes.png",
+    "name": "Shoes",
+    "rating": { "stars": 2, "count": 1758 },
+    "priceCents": 11999
+  },
+  {
+    "id": "C1",
+    "image": "img/Products/waterbottle.jpg",
+    "name": "Water Bottle",
+    "rating": { "stars": 3, "count": 278 },
+    "priceCents": 799
+  },
+  {
+    "id": "C2",
+    "image": "img/Products/bayernmunichjersey.jpg",
+    "name": "Bayern Munich Jersey",
+    "rating": { "stars": 5, "count": 178 },
+    "priceCents": 3599,
+    "type": "clothing",
+    "sizeChartLink": "img/clothing-size-chart.png"
+  },
+  {
+    "id": "D1",
+    "image": "img/Products/Ace.jpg",
+    "name": "Ace Figure (One Piece)",
+    "rating": { "stars": 4.5, "count": 18 },
+    "priceCents": 3099
+  },
+  {
+    "id": "D2",
+    "image": "img/Products/backpack.jpg",
+    "name": "Backpack",
+    "rating": { "stars": 4.5, "count": 321 },
+    "priceCents": 6999
+  },
+  {
+    "id": "E1",
+    "image": "img/Products/hoodie.jpg",
+    "name": "Hoodie Black",
+    "rating": { "stars": 3.5, "count": 258 },
+    "priceCents": 3999,
+    "type": "clothing",
+    "sizeChartLink": "img/clothing-size-chart.png"
+  },
+  {
+    "id": "E2",
+    "image": "img/Products/basketball.jpg",
+    "name": "Basketball",
+    "rating": { "stars": 2.5, "count": 465 },
+    "priceCents": 2599
+  },
+  {
+    "id": "F1",
+    "image": "img/Products/boxingbag.jpg",
+    "name": "Boxingbag",
+    "rating": { "stars": 4, "count": 258 },
+    "priceCents": 7899
+  },
+  {
+    "id": "F2",
+    "image": "img/Products/cap.jpg",
+    "name": "Cap",
+    "rating": { "stars": 3.5, "count": 58 },
+    "priceCents": 1999
+  },
+  {
+    "id": "G1",
+    "image": "img/Products/motorolaphone.jpg",
+    "name": "Motorola Smart-Phone.jpg",
+    "rating": { "stars": 4.5, "count": 2758 },
+    "priceCents": 63299
+  },
+  {
+    "id": "G2",
+    "image": "img/Products/neonvest.jpg",
+    "name": "Neon Vest",
+    "rating": { "stars": 3.5, "count": 188 },
+    "priceCents": 1799
+  },
+  {
+    "id": "H1",
+    "image": "img/Products/rimcleaner.jpg",
+    "name": "Rim Cleaner",
+    "rating": { "stars": 1, "count": 201 },
+    "priceCents": 599
+  },
+  {
+    "id": "H2",
+    "image": "img/Products/scooter.jpg",
+    "name": "Scooter",
+    "rating": { "stars": 4, "count": 17 },
+    "priceCents": 31999
+  },
+  {
+    "id": "I1",
+    "image": "img/Products/speakers.jpg",
+    "name": "Speakers",
+    "rating": { "stars": 1.5, "count": 27 },
+    "priceCents": 65299
+  },
+  {
+    "id": "I2",
+    "image": "img/Products/smartwatch.jpg",
+    "name": "Smart Watch",
+    "rating": { "stars": 4, "count": 78 },
+    "priceCents": 35000
+  },
+  {
+    "id": "J1",
+    "image": "img/Products/swisstone.jpg",
+    "name": "Swisstone Mobile-Phone",
+    "rating": { "stars": 3.5, "count": 2054 },
+    "priceCents": 3999
+  }
+]

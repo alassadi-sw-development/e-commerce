@@ -5,7 +5,6 @@ import { getDeliveryOption } from "../data/deliveryOptions.js";
 import { formatCurrency } from "../utils/money.js";
 //import { addOrder } from '../data/order.js';
 let UserDetails = JSON.parse(sessionStorage.getItem("UserDetails"));
-console.log(UserDetails.username);
 export function renderPaymentSummary(){
     let productPriceCents = 0;
     let shippingPriceCents= 0;
@@ -82,7 +81,17 @@ export function renderPaymentSummary(){
         const formattedDate = currentDate.toLocaleDateString('en-US', options);
         UpdateCartList.orderDate = formattedDate;
         UpdateCartList.totalPrice = formatCurrency(totalCents);
-        UpdateCartList.username = UserDetails.username;
+        try {
+            let UserDetails = JSON.parse(sessionStorage.getItem("UserDetails"));
+            if (UserDetails && UserDetails.username) {
+                UpdateCartList.username = UserDetails.username;
+            } else {
+                window.location.href = "signinForm.html"
+            }
+        } catch (error) {
+            // Handle any errors that occur during parsing or accessing session storage
+            console.error("Error occurred while accessing session storage:", error);
+        }
         try {
             const confirmResponse = await fetch('//localhost:8081/update-cart', {
                 method: 'PATCH',

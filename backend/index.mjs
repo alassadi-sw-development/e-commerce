@@ -15,7 +15,7 @@ const __dirname = path.resolve();
 
 app.use(session({
   secret: 'khalid the developer',
-  saveUninitialized: false,
+  saveUninitialized: true,
   resave:false,
   cookie:{
     maxAge: 6000 * 60
@@ -30,52 +30,8 @@ app.use(cors({
 app.use(express.static("public"));
 //app.use('/css', express.static(""))
 const emptySignature = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAV4AAABkCAYAAADOvVhlAAAAAXNSR0IArs4c6QAAAzpJREFUeF7t1MEJAAAIAzG7/9Juca+4QCHI7RwBAgQIpAJL14wRIECAwAmvJyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAg8HqAAZbdjCY4AAAAASUVORK5CYII="
-const products = [
-  {
-      "id": "A1",
-      "image": "img/Products/Tshirt.png",
-      "name": "T-Shirt",
-      "rating": {
-          "stars": 4.5,
-          "count": 2758
-      },
-      "priceCents": 3299,
-      "type": "clothing",
-      "sizeChartLink": "img/clothing-size-chart.png"
-  },
-  {
-      "id": "A2",
-      "image": "img/Products/shirt.png",
-      "name": "Shirt",
-      "rating": {
-          "stars": 5,
-          "count": 78
-      },
-      "priceCents": 4599,
-      "type": "clothing",
-      "sizeChartLink": "img/clothing-size-chart.png"
-  },
-  {
-      "id": "B1",
-      "image": "img/Products/socks.png",
-      "name": "Socks",
-      "rating": {
-          "stars": 1.5,
-          "count": 8
-      },
-      "priceCents": 599
-  },
-  {
-      "id": "B2",
-      "image": "img/Products/shoes.png",
-      "name": "Shoes",
-      "rating": {
-          "stars": 2,
-          "count": 1758
-      },
-      "priceCents": 11999
-  }
-];
+
+const products = readJSONFile("./products.json")
 
 app.get("/products", (request, response)=>{
   response.status(201).send(products);
