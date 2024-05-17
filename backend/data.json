@@ -129,6 +129,18 @@
         {
           "cartItems": [
             {
+              "productId": "A2",
+              "quantity": 1,
+              "deliveryOptionId": "1"
+            }
+          ],
+          "orderDate": "Friday, May 17",
+          "totalPrice": "54.73",
+          "username": "admin"
+        },
+        {
+          "cartItems": [
+            {
               "productId": "A1",
               "quantity": 1,
               "deliveryOptionId": "1"

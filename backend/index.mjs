@@ -8,6 +8,110 @@ import path from 'path';
 import {addUserToJSON, addCartToUser, getCartsByUsername, readJSONFile} from "./handleData.mjs"
 import session from "express-session";
 
+
+// SQLite
+import sqlite3 from 'sqlite3';
+sqlite3.verbose();
+
+// Connect to the database
+const db = new sqlite3.Database('./products.db', sqlite3.OPEN_READWRITE, (err) => {
+  if (err) {
+    return console.error(err.message);
+  }
+  console.log('Connected to the products database.');
+});
+
+// Create the products table
+/* const createTableSql = `CREATE TABLE IF NOT EXISTS products (
+  id TEXT PRIMARY KEY,
+  image TEXT,
+  name TEXT,
+  ratingStars REAL,
+  ratingCount INTEGER,
+  priceCents INTEGER,
+  type TEXT,
+  sizeChartLink TEXT
+)`;
+Drop table
+db.run(createTableSql) */
+//insert data into table
+/* const sql = `INSERT INTO products(id, image, name, ratingStars, ratingCount, priceCents, type, sizeChartLink) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+const products = readJSONFile("./products.json");
+products.forEach((product) => {
+  db.run(
+    sql,
+    [
+      product.id,
+      product.image,
+      product.name,
+      product.rating.stars,
+      product.rating.count,
+      product.priceCents,
+      product.type || null,
+      product.sizeChartLink || null
+    ],
+    (err) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(`Inserted product with id: ${product.id}`);
+    }
+  );
+}); */
+
+// update
+/* sql = 'UPDATE products SET ratingCount = ? where id = ?';
+db.run(sql,["500", "I1"]) */
+//delete
+/* sql = 'DELETE FROM products where id=?';
+db.run(sql,["I1"]) */
+
+//query the database
+/* let sql = `SELECT * FROM products`;
+db.all(sql,[], (err,rows)=>{
+  if (err) return console.error(err.message);
+  rows.forEach(row=>{
+    console.log(row)
+  })
+}) */
+
+function getProducts() {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT * FROM products`;
+
+    db.all(sql, [], (err, rows) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(rows);
+      }
+
+      db.close((err) => {
+        if (err) {
+          console.error(err.message);
+        }
+      });
+    });
+  });
+}
+
+async function fetchAndSaveProducts() {
+  try {
+    const products = await getProducts();
+    console.log(products);
+    return products;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+fetchAndSaveProducts().then((products) => {
+  console.log('Products array:', products);
+});
+// end SQlite
+
+
+  
 const app = express();
 const PORT = process.env.PORT || 8081;
 const allowedOrigins = ['http://127.0.0.1:5500','http://127.0.0.1:5501', 'http://127.0.0.1:5502', 'http://127.0.0.1:5503'];
@@ -31,7 +135,18 @@ app.use(express.static("public"));
 //app.use('/css', express.static(""))
 const emptySignature = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAV4AAABkCAYAAADOvVhlAAAAAXNSR0IArs4c6QAAAzpJREFUeF7t1MEJAAAIAzG7/9Juca+4QCHI7RwBAgQIpAJL14wRIECAwAmvJyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAgIrx8gQIBALCC8Mbg5AgQICK8fIECAQCwgvDG4OQIECAivHyBAgEAsILwxuDkCBAg8HqAAZbdjCY4AAAAASUVORK5CYII="
 
-const products = readJSONFile("./products.json")
+
+
+const productsDB = await fetchAndSaveProducts();
+const products = productsDB.map(product => ({
+  id: product.id,
+  image: product.image,
+  name: product.name,
+  rating: { stars: product.ratingStars, count: product.ratingCount },
+  priceCents: product.priceCents,
+  type: product.type || undefined,
+  sizeChartLink: product.sizeChartLink || undefined
+}));
 
 app.get("/products", (request, response)=>{
   response.status(201).send(products);
@@ -123,4 +238,5 @@ app.get('/usersCarts', (request, response)=>{
 app.listen(PORT, ()=>{
   console.log(`Running on http://localhost:${PORT}`);
 });
+
 
