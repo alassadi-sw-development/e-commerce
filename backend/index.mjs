@@ -228,12 +228,7 @@ app.get("/signin/status", (request, response) => {
 
 
 
-app.get('', (request, response)=>{
-  response.render('index', {title : "users", products})
-})
-app.get('/usersCarts', (request, response)=>{
-  response.render('usersCarts', {title : "user's Carts"})
-})
+
 
 function insertProduct(product) {
   const db = new sqlite3.Database('./products.db', sqlite3.OPEN_READWRITE, (err) => {
@@ -273,10 +268,36 @@ function insertProduct(product) {
   });
 }
 
+app.get('', (request, response)=>{
+  response.render('index', {title : "Edit Products", products})
+})
+app.get('/usersCarts', (request, response)=>{
+  response.render('usersCarts', {title : "user's Carts"})
+})
+
 app.post('/insertProduct', (req, res) => {
   const productData = req.body; // Get the product data from the request body
   insertProduct(productData); // Pass the product data to the function to insert into the database
   res.status(200).json({ message: 'Product added successfully' }); // Respond with a success message
+});
+
+app.delete('/deleteProduct/:id', (req, res) => {
+  const productId = req.params.id;
+
+  const db = new sqlite3.Database('./products.db', sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    console.log('Connected to the products database.');
+  });
+  const sql = 'DELETE FROM products WHERE id = ?';
+
+  db.run(sql, [productId], function(err) {
+      if (err) {
+          return res.status(500).json({ error: err.message });
+      }
+      res.json({ message: `Product with ID ${productId} deleted successfully` });
+  });
 });
 
 app.listen(PORT, ()=>{

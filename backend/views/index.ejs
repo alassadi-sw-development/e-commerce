@@ -1,16 +1,18 @@
 <% for (let i = 0; i < products.length; i++) { %>
   <div class="product-item">
-      <p><%= products[i].image %></p>
-      <h2><%= products[i].name %></h2>
-      <p>Rating: <%= products[i].rating.stars %> stars (<%= products[i].rating.count %> reviews)</p>
-      <p>Price: $<%= (products[i].priceCents / 100).toFixed(2) %></p>
-      <% if (products[i].type && products[i].sizeChartLink) { %>
-          <p>Type: <%= products[i].type %></p>
-          <a href="<%= products[i].sizeChartLink %>">Size Chart</a>
-      <% } %>
-      <button class="ejs-delete-product">Delete</button>
+    <p><%= products[i].id %></p>
+    <p><%= products[i].image %></p>
+    <h2><%= products[i].name %></h2>
+    <p>Rating: <%= products[i].rating.stars %> stars (<%= products[i].rating.count %> reviews)</p>
+    <p>Price: $<%= (products[i].priceCents / 100).toFixed(2) %></p>
+    <% if (products[i].type && products[i].sizeChartLink) { %>
+      <p>Type: <%= products[i].type %></p>
+      <a href="<%= products[i].sizeChartLink %>">Size Chart</a>
+    <% } %>
+    <button class="ejs-delete-product" data-id="<%= products[i].id %>">Delete</button>
   </div>
 <% } %>
+
 <div class="add-product-form">
   <div>
     <input type="text" id="id" name="id" placeholder="ID"><br>
@@ -27,7 +29,39 @@
 <script>
 
 document.addEventListener("DOMContentLoaded", function() {
+  const deleteButtons = document.querySelectorAll(".ejs-delete-product");
+
+      deleteButtons.forEach(button => {
+      button.addEventListener("click", function() {
+          const productId = this.getAttribute("data-id");
+
+          fetch(`http://localhost:8081/deleteProduct/${productId}`, {
+              method: 'DELETE',
+              headers: {
+                  'Content-Type': 'application/json'
+              }
+          })
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error('Network response was not ok');
+              }
+              return response.json();
+          })
+          .then(data => {
+              console.log('Product deleted:', data);
+              const productElement = this.closest('.product-item');
+              if (productElement) {
+                  productElement.remove();
+              }
+          })
+          .catch(error => {
+              console.error('There was a problem with your fetch operation:', error);
+          });
+      });
+  });
+
     const form = document.querySelector('.ejs-add-product');
+    
     form.addEventListener('click', function(event) {
         event.preventDefault();
         
@@ -41,7 +75,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const type = document.querySelector('#type').value;
         const sizeChartLink = document.querySelector('#sizeChartLink').value;
 
-        // Create a JavaScript object with the obtained values
         const productData = {
             id: id,
             image: image,
@@ -53,10 +86,6 @@ document.addEventListener("DOMContentLoaded", function() {
             sizeChartLink: sizeChartLink
         };
 
-        // Use the productData object as needed
-        console.log(productData);
-        
-        // Here you can perform further actions like sending the data to the server via AJAX
         fetch('http://localhost:8081/insertProduct', {
           method: 'POST',
           headers: {
