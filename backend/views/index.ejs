@@ -1,2 +1,83 @@
-<h1>Users Page</h1>
-<p>hey there</p>
+<% for (let i = 0; i < products.length; i++) { %>
+  <div class="product-item">
+      <p><%= products[i].image %></p>
+      <h2><%= products[i].name %></h2>
+      <p>Rating: <%= products[i].rating.stars %> stars (<%= products[i].rating.count %> reviews)</p>
+      <p>Price: $<%= (products[i].priceCents / 100).toFixed(2) %></p>
+      <% if (products[i].type && products[i].sizeChartLink) { %>
+          <p>Type: <%= products[i].type %></p>
+          <a href="<%= products[i].sizeChartLink %>">Size Chart</a>
+      <% } %>
+      <button class="ejs-delete-product">Delete</button>
+  </div>
+<% } %>
+<div class="add-product-form">
+  <div>
+    <input type="text" id="id" name="id" placeholder="ID"><br>
+    <input type="text" id="image" name="image" placeholder="Image URL"><br>
+    <input type="text" id="name" name="name" placeholder="Product Name"><br>
+    <input type="text" id="ratingStars" name="ratingStars" placeholder="Rating Stars"><br>
+    <input type="text" id="ratingCount" name="ratingCount" placeholder="Rating Count"><br>
+    <input type="text" id="priceCents" name="priceCents" placeholder="Price (Cents)"><br>
+    <input type="text" id="type" name="type" placeholder="Type"><br>
+    <input type="text" id="sizeChartLink" name="sizeChartLink" placeholder="Size Chart Link"><br>
+    <button class="ejs-add-product">Add Product</button>
+  </div>
+</div>
+<script>
+
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector('.ejs-add-product');
+    form.addEventListener('click', function(event) {
+        event.preventDefault();
+        
+        // Select each input element by name and get its value
+        const id = document.querySelector('#id').value;
+        const image = document.querySelector('#image').value;
+        const name = document.querySelector('#name').value;
+        const ratingStars = parseFloat(document.querySelector('#ratingStars').value);
+        const ratingCount = parseInt(document.querySelector('#ratingCount').value);
+        const priceCents = parseInt(document.querySelector('#priceCents').value);
+        const type = document.querySelector('#type').value;
+        const sizeChartLink = document.querySelector('#sizeChartLink').value;
+
+        // Create a JavaScript object with the obtained values
+        const productData = {
+            id: id,
+            image: image,
+            name: name,
+            ratingStars: ratingStars,
+            ratingCount: ratingCount,
+            priceCents: priceCents,
+            type: type,
+            sizeChartLink: sizeChartLink
+        };
+
+        // Use the productData object as needed
+        console.log(productData);
+        
+        // Here you can perform further actions like sending the data to the server via AJAX
+        fetch('http://localhost:8081/insertProduct', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(productData)
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
+      .then(data => {
+          console.log('Data added:', data);
+      })
+      .catch(error => {
+          console.error('There was a problem with your fetch operation:', error);
+      });
+          });
+});
+
+
+</script>

@@ -35,9 +35,10 @@ const db = new sqlite3.Database('./products.db', sqlite3.OPEN_READWRITE, (err) =
 Drop table
 db.run(createTableSql) */
 //insert data into table
+
+
+
 /* const sql = `INSERT INTO products(id, image, name, ratingStars, ratingCount, priceCents, type, sizeChartLink) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-const products = readJSONFile("./products.json");
-products.forEach((product) => {
   db.run(
     sql,
     [
@@ -56,8 +57,7 @@ products.forEach((product) => {
       }
       console.log(`Inserted product with id: ${product.id}`);
     }
-  );
-}); */
+  ); */
 
 // update
 /* sql = 'UPDATE products SET ratingCount = ? where id = ?';
@@ -229,11 +229,55 @@ app.get("/signin/status", (request, response) => {
 
 
 app.get('', (request, response)=>{
-  response.render('index', {title : "users"})
+  response.render('index', {title : "users", products})
 })
 app.get('/usersCarts', (request, response)=>{
   response.render('usersCarts', {title : "user's Carts"})
 })
+
+function insertProduct(product) {
+  const db = new sqlite3.Database('./products.db', sqlite3.OPEN_READWRITE, (err) => {
+      if (err) {
+          return console.error(err.message);
+      }
+      console.log('Connected to the products database.');
+  });
+
+  // Insert data into table
+  const sql = `INSERT INTO products(id, image, name, ratingStars, ratingCount, priceCents, type, sizeChartLink) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+  db.run(
+      sql,
+      [
+          product.id,
+          product.image,
+          product.name,
+          product.ratingStars,
+          product.ratingCount,
+          product.priceCents,
+          product.type || null,
+          product.sizeChartLink || null
+      ],
+      (err) => {
+          if (err) {
+              return console.error(err.message);
+          }
+          console.log(`Inserted product with id: ${product.id}`);
+      }
+  );
+
+  db.close((err) => {
+      if (err) {
+          return console.error(err.message);
+      }
+      console.log('Closed the database connection.');
+  });
+}
+
+app.post('/insertProduct', (req, res) => {
+  const productData = req.body; // Get the product data from the request body
+  insertProduct(productData); // Pass the product data to the function to insert into the database
+  res.status(200).json({ message: 'Product added successfully' }); // Respond with a success message
+});
 
 app.listen(PORT, ()=>{
   console.log(`Running on http://localhost:${PORT}`);
