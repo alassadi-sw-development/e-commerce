@@ -132,6 +132,21 @@
         })
         .then((data) => {
           console.log("Data added:", data);
+          const containerDiv = document.createElement("div");
+          containerDiv.className = "product-item";
+          containerDiv.innerHTML = `
+            <p>${id}</p>
+            <p>${image}</p>
+            <h2>${name}</h2>
+            <p>Rating:${ratingStars} stars ( ${ratingCount} reviews)</p>
+            <p>Price: $${(priceCents / 100).toFixed(2)}</p>
+            <button class="ejs-delete-product" data-id="${id}">
+              Delete
+            </button>
+          `;
+          document
+            .querySelector(".add-product-form")
+            .insertAdjacentElement("beforebegin", containerDiv);
         })
         .catch((error) => {
           console.error(

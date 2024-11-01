@@ -129,6 +129,47 @@
         {
           "cartItems": [
             {
+              "productId": "E2",
+              "quantity": 1,
+              "deliveryOptionId": "1"
+            }
+          ],
+          "orderDate": "Friday, August 30",
+          "totalPrice": "30.93",
+          "username": "admin"
+        },
+        {
+          "cartItems": [
+            {
+              "productId": "Z1",
+              "quantity": 1,
+              "deliveryOptionId": "1"
+            }
+          ],
+          "orderDate": "Thursday, May 23",
+          "totalPrice": "29.74",
+          "username": "admin"
+        },
+        {
+          "cartItems": [
+            {
+              "productId": "I2",
+              "quantity": 1,
+              "deliveryOptionId": "1"
+            },
+            {
+              "productId": "D2",
+              "quantity": 1,
+              "deliveryOptionId": "1"
+            }
+          ],
+          "orderDate": "Tuesday, May 21",
+          "totalPrice": "499.79",
+          "username": "admin"
+        },
+        {
+          "cartItems": [
+            {
               "productId": "A2",
               "quantity": 1,
               "deliveryOptionId": "1"
@@ -344,6 +385,31 @@
           "orderDate": "Thursday, May 16",
           "totalPrice": "345.02",
           "username": "TestUser"
+        }
+      ]
+    },
+    {
+      "firstname": "lastTest",
+      "lastname": "LastTest",
+      "username": "lastTest",
+      "email": "LastTest@elvrum.com",
+      "password": "lastTest",
+      "street_address": "street",
+      "city": "City",
+      "state": "State",
+      "postal_code": "1234",
+      "carts": [
+        {
+          "cartItems": [
+            {
+              "productId": "C2",
+              "quantity": 1,
+              "deliveryOptionId": "2"
+            }
+          ],
+          "orderDate": "Thursday, May 23",
+          "totalPrice": "48.77",
+          "username": "lastTest"
         }
       ]
     }
